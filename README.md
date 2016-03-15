@@ -10,3 +10,6 @@ It will also have 4 views:
 2. Taking tests
 3. Grading
 4. Viewing grade
+
+
+We'll be using firebase to hold the questions as well as the answers, linked to the students' google account for authentication.
