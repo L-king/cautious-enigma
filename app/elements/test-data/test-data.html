@@ -1,0 +1,82 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+
+<dom-module id="test-data">
+  <template>
+
+    <style>
+
+    </style>
+
+    <firebase-collection location="https://latin-assess.firebaseio.com"
+                         data="{{fbTest}}"
+                         on-firebase-value="_firebaseLoaded">
+    </firebase-collection>
+
+    <!-- Backfill test from localstorage. This prevents an initial flash while
+         we're waiting to hear from Firebase, and it lets the user see their
+         old test if they start the app offline.
+         This SHOULD NOT write to Firebase. If the user has cleared their
+         localstorage, it should not nullify everything saved in Firebase. -->
+    <iron-localstorage name="polymer-test"
+                       on-iron-localstorage-load="_backupLoaded"
+                       value="{{backupTest}}">
+    </iron-localstorage>
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'test-data',
+
+      properties: {
+
+        test: {
+          notify: true
+        },
+
+        user: {
+          observer: '_userChanged'
+        },
+
+        _firebaseConnected: {
+          value: false
+        }
+
+      },
+
+      // Setup user ref in firebase if auth succeeds
+      _userChanged: function(user) {
+        if (user) {
+          this.userLocation = [this.location, 'users', this.user.uid].join('/');
+        }
+      },
+
+      _firebaseLoaded: function() {
+        this._firebaseConnected = true;
+        this.test = this.fbTest;
+        this.backupTest = this.fbTest;
+        this.linkPaths('fbTest', 'test');
+        this.linkPaths('backupTest', 'test');
+      },
+
+      _backupLoaded: function() {
+        if (!this._firebaseConnected) {
+          this.test = this.backuptest.slice();
+        }
+      }
+
+    });
+
+  </script>
+</dom-module>
