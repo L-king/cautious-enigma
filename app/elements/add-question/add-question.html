@@ -10,13 +10,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<firebase-collection
+  location="https://latin-assess.firebaseio.com/Test"
+  data="{{testQuestions}}"></firebase-collection>
+
 <dom-module id="add-question">
   <template>
-
-      <paper-input label="add test question"></paper-input>
-      <paper-button> Add </paper-button>
-      <paper-input label="add question details"></paper-input>
-      <paper-button> Add </paper-button>
+    <div>
+      <paper-input label="add test question" id="testInput"></paper-input>
+      <paper-input label="add question details" id="detailInput"></paper-input>
+      <paper-button on-tap="_add"> Add </paper-button>
+    </div>
 
 
   </template>
@@ -27,8 +31,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'add-question',
 
-      properties: {
+      _add: function(){
+        this.$.testInput.value = null;
+        this.$.detailInput.value = null;
       }
+
+
     });
   })();
   </script>
