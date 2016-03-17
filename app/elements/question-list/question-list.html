@@ -23,6 +23,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--paper-font-body1);
       }
     </style>
+    <firebase-collection
+      location="https://latin-assess.firebaseio.com/Test"
+      data="{{questions}}"></firebase-collection>
+
 
       <template is="dom-repeat" items="{{questions}}">
         <paper-material>

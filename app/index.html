@@ -65,15 +65,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <test-data test={{test}}>
     </test-data>
 
-      <question-list></question-list>
+    <firebase-document
+          location="https://latin-assess.firebaseio.com/Test"
+          data="{{test}}"></firebase-document>
 
-    <paper-material id="add test question">
-      <paper-input label="add test question"></paper-input>
-      <paper-button> Add </paper-button>
-      <paper-input label="add question details"></paper-input>
-      <paper-button> Add </paper-button>
-
+    <paper-material>
+      <test-item
+        test-question={{test.One.question}}
+        test-detail={{test.One.detail}}
+      ></test-item>
     </paper-material>
+
+    <question-list></question-list>
+
+    <template is="dom-bind">
+      <firebase-collection
+        location="https://latin-assess.firebaseio.com/Test"
+        data="{{questions}}"></firebase-collection>
+      <template is="dom-repeat"
+                items="{{questions}}"
+                as="{{question}}"
+                limit-to-first="3">
+        <paper-material>
+          <h2> This is a test </h2>
+          <p>{{question.One.detail}}</p>
+          <p>{{test.One}}</p>
+        </paper-material>
+      </template>
+    </template>
 
   </template>
 
