@@ -62,37 +62,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved>
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-    <test-data test={{test}}>
-    </test-data>
-
-    <firebase-document
-          location="https://latin-assess.firebaseio.com/Test"
-          data="{{test}}"></firebase-document>
 
     <paper-material>
-      <test-item
-        test-question={{test.One.question}}
-        test-detail={{test.One.detail}}
-      ></test-item>
+      <question-list></question-list>
     </paper-material>
-
-    <question-list></question-list>
-
-    <template is="dom-bind">
-      <firebase-collection
-        location="https://latin-assess.firebaseio.com/Test"
-        data="{{questions}}"></firebase-collection>
-      <template is="dom-repeat"
-                items="{{questions}}"
-                as="{{question}}"
-                limit-to-first="3">
-        <paper-material>
-          <h2> This is a test </h2>
-          <p>{{question.One.detail}}</p>
-          <p>{{test.One}}</p>
-        </paper-material>
-      </template>
-    </template>
 
   </template>
 

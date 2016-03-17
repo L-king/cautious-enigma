@@ -23,15 +23,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--paper-font-body1);
       }
     </style>
-    <firebase-collection
-      location="https://latin-assess.firebaseio.com/Test"
-      data="{{questions}}"></firebase-collection>
 
-
-      <template is="dom-repeat" items="{{questions}}">
-        <paper-material>
-          <test-item test-question="{{item}}" test-detail="{{item}}"></test-item>
-        </paper-material>
+    <template is="dom-bind">
+        <firebase-collection
+          limit-to-first="3"
+          location="https://latin-assess.firebaseio.com/Test"
+          data="{{questions}}"></firebase-collection>
+        <template is="dom-repeat" items="{{questions}}" as="question">
+          <test-item  test-question="{{question.question}}"
+                      test-detail="{{question.detail}}">
+                    </test-item>
+        </template>
       </template>
 
   </template>
