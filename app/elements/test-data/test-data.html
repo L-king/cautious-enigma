@@ -18,9 +18,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <firebase-collection location="https://latin-assess.firebaseio.com"
-                         data="{{fbTest}}"
-                         on-firebase-value="_firebaseLoaded">
+    <firebase-collection location="https://latin-assess.firebaseio.com/Test"
+                         data="{{fbTest}}">
     </firebase-collection>
 
     <!-- Backfill test from localstorage. This prevents an initial flash while
@@ -28,10 +27,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          old test if they start the app offline.
          This SHOULD NOT write to Firebase. If the user has cleared their
          localstorage, it should not nullify everything saved in Firebase. -->
-    <iron-localstorage name="polymer-test"
-                       on-iron-localstorage-load="_backupLoaded"
-                       value="{{backupTest}}">
-    </iron-localstorage>
 
   </template>
   <script>
@@ -45,36 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
 
-        user: {
-          observer: '_userChanged'
-        },
-
-        _firebaseConnected: {
-          value: false
-        }
-
       },
 
-      // Setup user ref in firebase if auth succeeds
-      _userChanged: function(user) {
-        if (user) {
-          this.userLocation = [this.location, 'users', this.user.uid].join('/');
-        }
-      },
-
-      _firebaseLoaded: function() {
-        this._firebaseConnected = true;
-        this.test = this.fbTest;
-        this.backupTest = this.fbTest;
-        this.linkPaths('fbTest', 'test');
-        this.linkPaths('backupTest', 'test');
-      },
-
-      _backupLoaded: function() {
-        if (!this._firebaseConnected) {
-          this.test = this.backuptest.slice();
-        }
-      }
 
     });
 

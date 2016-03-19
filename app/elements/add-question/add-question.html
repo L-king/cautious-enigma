@@ -32,6 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'add-question',
 
       _add: function(){
+        var ref = new Firebase('https://latin-assess.firebaseio.com/Test');
+        ref.push({ question: this.$.testInput.value , detail: this.$.detailInput.value});
         this.$.testInput.value = null;
         this.$.detailInput.value = null;
       }
