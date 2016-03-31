@@ -62,11 +62,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved>
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-    <test-data></test-data>
-    <paper-material>
-      <question-list></question-list>
-      <add-question></add-question>
-    </paper-material>
+    <paper-header-panel>
+      <paper-drawer-panel id="paperDrawerPanel" force-narrow>
+        <div drawer>
+          <paper-button tabindex="0"> Test </paper-button>
+          <paper-button tabindex="0" paper-drawer-toggle> Close </paper-button>
+        </div>
+        <div main>
+          <paper-toolbar>
+            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+            <span class="title"> Latin Assessment </span>
+          </paper-toolbar>
+          <test-data></test-data>
+          <paper-material>
+            <question-list></question-list>
+            <add-question></add-question>
+          </paper-material>
+        </div>
+      </paper-drawer-panel>
+    </paper-header-panel>
 
   </template>
 
